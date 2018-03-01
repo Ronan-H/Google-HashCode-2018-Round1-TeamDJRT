@@ -13,6 +13,7 @@ public class Simulation {
 	private Vehicle[] vehicles;
 	private int currentStep;
 	private List<Ride> availableRides;
+	private ArrayList<ArrayList<Integer>> assignedRides;
 	
 	public Simulation(int rows, int cols, int numVehicles, int numRides, int bonus, int totalSteps, Ride[] rides) {
 		this.rows = rows;
@@ -33,6 +34,13 @@ public class Simulation {
 			vehicles[i] = new Vehicle();
 		}
 		availableRides = new ArrayList<Ride>();
+		
+		assignedRides = new ArrayList<ArrayList<Integer>>();
+		
+		for (int i = 0; i < numVehicles; ++i) {
+			assignedRides.add(new ArrayList<Integer>());
+			assignedRides.get(i).add(i + 1);
+		}
 		
 		currentStep = 0;
 	}
@@ -56,6 +64,10 @@ public class Simulation {
 					availableRides.add(rides.remove(i));
 					--i;
 				}
+			}
+			
+			for (i = 0; i < vehicles.length; ++i) {
+				vehicles[i].tick();
 			}
 		}
 	}
