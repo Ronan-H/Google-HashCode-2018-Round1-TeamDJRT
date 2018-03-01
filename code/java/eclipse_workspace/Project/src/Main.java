@@ -10,7 +10,7 @@ public class Main {
 	public static void main(String[] args) throws IOException {
 		// get input from file
 		
-		String inputFile = "e_high_bonus.in";
+		String inputFile = "a_example.in";
 		
 		int rows, cols;
 		int numVehicles;
@@ -47,6 +47,9 @@ public class Main {
 			ride.mustStart = lineInts[lineCounter++];
 			ride.mustFinish = lineInts[lineCounter++];
 			ride.index = i;
+			
+			//if (i == 0)System.out.printf("Ride (startRow, startCol), (endRow, endCol): (%d, %d), (%d, %d)%n",
+				//ride.startRow, ride.startCol, ride.destRow, ride.destCol);
 		}
 		
 		in.close();

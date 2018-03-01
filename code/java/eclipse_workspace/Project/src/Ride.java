@@ -5,23 +5,23 @@ public class Ride {
 	// Times at which the ride must start/finish by
 	int mustStart, mustFinish;
 	public int index;
+	
 	//Distance between
-	public int getDistance(Vehicle vehicle, int distance)
+	public int getDistanceTo(Vehicle vehicle)
 	{
-		distance = Math.abs(vehicle.row-startRow)+Math.abs(vehicle.col-startCol);
-		return distance;
+		return Math.abs(vehicle.row-startRow)+Math.abs(vehicle.col-startCol);
 	}
 	
 	//Check Distance
-	public boolean checkDistance(Vehicle vehicle, int turn)
+	public boolean canCompleteRide(Vehicle vehicle, int currentStep)
 	{
 		int totalDist;
-		int distance = 0;
+		int distance;
 		
-		distance = getDistance(vehicle, distance);
+		distance = getDistanceTo(vehicle);
 		
 		totalDist = distance + Math.abs(startRow - destRow) + Math.abs(startCol - destCol);
 		
-		return turn + totalDist < mustFinish + 1;
+		return (currentStep + totalDist) <= mustFinish;
 	}
 }

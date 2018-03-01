@@ -57,7 +57,7 @@ public class Simulation {
 			
 			// update availableRides
 			for (i = 0; i < availableRides.size(); ++i) {
-				if (currentStep > availableRides.get(i).mustFinish) {
+				if (currentStep >= availableRides.get(i).mustFinish) {
 					availableRides.remove(i);
 					--i;
 				}
@@ -75,7 +75,7 @@ public class Simulation {
 				for (j = 0; j < vehicles.length; ++j) {
 					if (vehicles[j].occupied) continue;
 					
-					if (availableRides.get(i).checkDistance(vehicles[j], currentStep)) {
+					if (availableRides.get(i).canCompleteRide(vehicles[j], currentStep)) {
 						vehicles[j].doRide(availableRides.get(i));
 						
 						assignedRides.get(j).add(availableRides.get(i).index);
@@ -90,7 +90,7 @@ public class Simulation {
 			}
 			
 			for (i = 0; i < vehicles.length; ++i) {
-				vehicles[i].tick(currentStep);
+				vehicles[i].tick();
 			}
 		}
 		

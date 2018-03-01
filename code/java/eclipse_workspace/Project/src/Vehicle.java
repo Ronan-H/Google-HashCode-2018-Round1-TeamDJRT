@@ -18,7 +18,11 @@ public class Vehicle {
 		this.col=col;
 	}
 	
-	public void tick(int steps) {
+	public void tick() {
+		if (currentRide != null && currentRide.index == 1) {
+			//System.out.printf("(row, col): (%d, %d)%n", row, col);
+		}
+		
 		if (occupied) {
 			if (row == destRow && col == destCol) {
 				if (reachedRideStart) {
@@ -28,9 +32,8 @@ public class Vehicle {
 					reachedRideStart = true;
 					
 					destRow = currentRide.destRow;
-					destRow = currentRide.destCol;
+					destCol = currentRide.destCol;
 				}
-				return;
 			}
 			else {
 				// make way towards destination
