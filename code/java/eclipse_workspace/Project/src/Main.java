@@ -10,7 +10,7 @@ public class Main {
 	public static void main(String[] args) throws IOException {
 		// get input from file
 		
-		String inputFile = "a_example";
+		String inputFile = "d_metropolis.in";
 		
 		int rows, cols;
 		int numVehicles;
@@ -18,7 +18,9 @@ public class Main {
 		int bonus;
 		int totalSteps;
 		
-		BufferedReader in = new BufferedReader(new FileReader(inputFile));
+		Ride[] rides;
+		
+		in = new BufferedReader(new FileReader("./input/" + inputFile));
 		
 		int[] lineInts;
 		int lineCounter = 0;
@@ -30,6 +32,27 @@ public class Main {
 		numRides = lineInts[lineCounter++];
 		bonus = lineInts[lineCounter++];
 		totalSteps = lineInts[lineCounter++];
+		
+		rides = new Ride[numRides];
+		
+		for (int i = 0; i < rides.length; ++i) {
+			lineInts = readInts();
+			lineCounter = 0;
+			rides[i] = new Ride();
+			Ride ride = rides[i];
+			ride.startRow = lineInts[lineCounter++];
+			ride.startCol = lineInts[lineCounter++];
+			ride.destRow = lineInts[lineCounter++];
+			ride.destCol = lineInts[lineCounter++];
+			ride.mustStart = lineInts[lineCounter++];
+			ride.mustFinish = lineInts[lineCounter++];
+		}
+		
+		in.close();
+		
+		// start the simulation
+		Simulation sim = new Simulation(rows, cols, numVehicles, numRides, bonus, totalSteps, rides);
+		sim.startSimulation();
 	}
 	
 	public static int[] readInts() throws IOException {
