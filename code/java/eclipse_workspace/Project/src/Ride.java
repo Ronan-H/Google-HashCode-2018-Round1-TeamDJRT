@@ -2,29 +2,28 @@
 public class Ride {
 	int startRow, startCol;
 	int destRow, destCol;
-	int currRow, currCol;
 	// Times at which the ride must start/finish by
 	int mustStart, mustFinish;
 	
 	//Distance between
-	public int getDistance(Vehicle vehicle)
+	public int getDistance(Vehicle vehicle, int distance)
 	{
-		//Start row + col are where it currently is 
-		//dest row + col where the next ride will start
-		int distance;
-		distance = java.lang.Math.abs(currRow-startRow)+java.lang.Math.abs(currCol-startCol) ;
+		distance = Math.abs(vehicle.row-startRow)+Math.abs(vehicle.col-startCol) ;
 		return distance;
 	}
 	
 	//Check Distance
-	public boolean checkDistance(Vehicle vehicle, int distance, int turn, int lateFin)
+	public boolean checkDistance(Vehicle vehicle, int turn)
 	{
 		boolean doIt = false;
 		int totalDist;
+		int distance = 0;
+		
+		getDistance(vehicle, distance);
 		
 		totalDist = distance + (startRow - destRow) + (startCol - destCol);
 		
-		if(turn + totalDist > lateFin)
+		if(turn + totalDist > mustFinish)
 		{
 			doIt = false;
 		}
