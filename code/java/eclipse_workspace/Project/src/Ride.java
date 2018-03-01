@@ -5,7 +5,7 @@ public class Ride {
 	int currRow, currCol;
 	// Times at which the ride must start/finish by
 	int mustStart, mustFinish;
-	
+	public int index;
 	//Distance between
 	public int getDistance(Vehicle vehicle)
 	{

@@ -69,6 +69,16 @@ public class Simulation {
 			for (i = 0; i < vehicles.length; ++i) {
 				vehicles[i].tick();
 			}
+			
+			for (i = 0; i < availableRides.size(); ++i) {
+				for (j = 0; j < vehicles.length; ++j) {
+					if (availableRides.get(i).checkDistance(vehicles[j], 0, 0, 0)) {
+						vehicles[j].doRide(availableRides.get(i));
+						
+						assignedRides.get(j).add(availableRides.get(i).index);
+					}
+				}
+			}
 		}
 	}
 	

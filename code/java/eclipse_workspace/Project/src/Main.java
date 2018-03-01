@@ -46,6 +46,7 @@ public class Main {
 			ride.destCol = lineInts[lineCounter++];
 			ride.mustStart = lineInts[lineCounter++];
 			ride.mustFinish = lineInts[lineCounter++];
+			ride.index = i;
 		}
 		
 		in.close();

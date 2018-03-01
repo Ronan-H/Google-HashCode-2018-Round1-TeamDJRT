@@ -41,5 +41,10 @@ public class Vehicle {
 		}
 	}
 	
+	public void doRide(Ride ride) {
+		destRow = ride.destRow;
+		destCol = ride.destCol;
+		occupied = true;
+	}
 	
 }
