@@ -3,7 +3,8 @@ public class Vehicle {
 	public int row, col;
 	public int destRow, destCol;
 	public boolean occupied;
-	
+	boolean reachedRideStart;
+	private Ride currentRide;
 	
 	public Vehicle()
 	{
@@ -17,10 +18,19 @@ public class Vehicle {
 		this.col=col;
 	}
 	
-	public void tick() {
+	public void tick(int steps) {
 		if (occupied) {
 			if (row == destRow && col == destCol) {
-				occupied = false;
+				if (reachedRideStart) {
+					occupied = false;
+				}
+				else {
+					reachedRideStart = true;
+					
+					destRow = currentRide.destRow;
+					destRow = currentRide.destCol;
+				}
+				return;
 			}
 			else {
 				// make way towards destination
@@ -42,9 +52,11 @@ public class Vehicle {
 	}
 	
 	public void doRide(Ride ride) {
-		destRow = ride.destRow;
-		destCol = ride.destCol;
+		destRow = ride.startRow;
+		destCol = ride.startCol;
 		occupied = true;
+		reachedRideStart = false;
+		currentRide = ride;
 	}
 	
 }

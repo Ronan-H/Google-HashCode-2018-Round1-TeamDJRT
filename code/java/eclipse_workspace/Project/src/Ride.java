@@ -8,28 +8,20 @@ public class Ride {
 	//Distance between
 	public int getDistance(Vehicle vehicle, int distance)
 	{
-		distance = Math.abs(vehicle.row-startRow)+Math.abs(vehicle.col-startCol) ;
+		distance = Math.abs(vehicle.row-startRow)+Math.abs(vehicle.col-startCol);
 		return distance;
 	}
 	
 	//Check Distance
 	public boolean checkDistance(Vehicle vehicle, int turn)
 	{
-		boolean doIt = false;
 		int totalDist;
 		int distance = 0;
 		
-		getDistance(vehicle, distance);
+		distance = getDistance(vehicle, distance);
 		
-		totalDist = distance + (startRow - destRow) + (startCol - destCol);
+		totalDist = distance + Math.abs(startRow - destRow) + Math.abs(startCol - destCol);
 		
-		if(turn + totalDist > mustFinish)
-		{
-			doIt = false;
-		}
-		else
-			doIt = true;
-		
-		return doIt;
+		return turn + totalDist < mustFinish + 1;
 	}
 }

@@ -1,3 +1,7 @@
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -14,6 +18,7 @@ public class Simulation {
 	private int currentStep;
 	private List<Ride> availableRides;
 	private ArrayList<ArrayList<Integer>> assignedRides;
+	private int numRidesAssigned = 0;
 	
 	public Simulation(int rows, int cols, int numVehicles, int numRides, int bonus, int totalSteps, Ride[] rides) {
 		this.rows = rows;
@@ -35,7 +40,7 @@ public class Simulation {
 		}
 		availableRides = new ArrayList<Ride>();
 		
-		assignedRides = new ArrayList<ArrayList<Integer>>();
+		assignedRides = new ArrayList<ArrayList<Integer>>(numVehicles);
 		
 		for (int i = 0; i < numVehicles; ++i) {
 			assignedRides.add(new ArrayList<Integer>());
@@ -61,25 +66,51 @@ public class Simulation {
 			for (i = 0; i < rides.size(); ++i) {
 				Ride ride = rides.get(i);
 				if (currentStep >= ride.mustStart && currentStep < ride.mustFinish) {
-					availableRides.add(rides.remove(i));
-					--i;
+					Ride rideToAdd = rides.remove(i--);
+					availableRides.add(rideToAdd);
 				}
-			}
-			
-			for (i = 0; i < vehicles.length; ++i) {
-				vehicles[i].tick();
 			}
 			
 			for (i = 0; i < availableRides.size(); ++i) {
 				for (j = 0; j < vehicles.length; ++j) {
-					if (availableRides.get(i).checkDistance(vehicles[j], 0, 0, 0)) {
+					if (vehicles[j].occupied) continue;
+					
+					if (availableRides.get(i).checkDistance(vehicles[j], currentStep)) {
 						vehicles[j].doRide(availableRides.get(i));
 						
 						assignedRides.get(j).add(availableRides.get(i).index);
+						
+						availableRides.remove(i);
+						--i;
+						
+						++numRidesAssigned;
+						break;
 					}
 				}
 			}
+			
+			for (i = 0; i < vehicles.length; ++i) {
+				vehicles[i].tick(currentStep);
+			}
 		}
+		
+		// do output
+		try {
+			PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("./output/out.txt")));
+			
+			for (i = 0; i < assignedRides.size(); ++i) {
+				out.print(assignedRides.get(i).size() -1 + " ");
+				for (j = 1; j < assignedRides.get(i).size(); ++j) {
+					out.print(assignedRides.get(i).get(j) + " ");
+				}
+				out.println();
+			}
+			
+			out.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 	}
 	
 }

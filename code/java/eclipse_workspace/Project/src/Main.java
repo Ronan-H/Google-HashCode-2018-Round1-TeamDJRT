@@ -10,7 +10,7 @@ public class Main {
 	public static void main(String[] args) throws IOException {
 		// get input from file
 		
-		String inputFile = "d_metropolis.in";
+		String inputFile = "e_high_bonus.in";
 		
 		int rows, cols;
 		int numVehicles;
