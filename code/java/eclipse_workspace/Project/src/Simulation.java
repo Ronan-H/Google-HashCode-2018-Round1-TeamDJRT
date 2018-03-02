@@ -30,6 +30,21 @@ public class Simulation {
 		
 		// sort rides by their start time
 		this.rides = new ArrayList<>(Arrays.asList(rides));
+		
+		// IMPORTANT: Only include this snippet for the metropolis input file (removes outliers)
+		// Actually, don't include at all. Doesn't seem to help.
+		/*
+		for (int i = 0; i < this.rides.size(); ++i) {
+			Ride r = this.rides.get(i);
+			
+			if (Math.abs(r.destCol - r.startCol) > cols / 3
+			||  Math.abs(r.destRow - r.startRow) > rows / 3) {
+				this.rides.remove(i);
+			}
+		}
+		*/
+		// -------------------------------------------------------------------
+		
 		this.rides.sort(new RideComparator());
 		
 		// init vehicles
@@ -68,6 +83,9 @@ public class Simulation {
 				if (currentStep >= ride.mustStart && currentStep < ride.mustFinish) {
 					Ride rideToAdd = rides.remove(i--);
 					availableRides.add(rideToAdd);
+				}
+				else if (ride.mustStart > currentStep) {
+					break;
 				}
 			}
 			
