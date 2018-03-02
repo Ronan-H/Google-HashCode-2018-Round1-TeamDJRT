@@ -12,8 +12,7 @@ public class Ride {
 		return Math.abs(vehicle.row-startRow)+Math.abs(vehicle.col-startCol);
 	}
 	
-	//Check Distance
-	public boolean canCompleteRide(Vehicle vehicle, int currentStep)
+	public int getRouteDist(Vehicle vehicle)
 	{
 		int totalDist;
 		int distance;
@@ -22,6 +21,14 @@ public class Ride {
 		
 		totalDist = distance + Math.abs(startRow - destRow) + Math.abs(startCol - destCol);
 		
-		return (currentStep + totalDist) <= mustFinish;
+		return totalDist;
 	}
+	
+	//Check Distance
+	public boolean canCompleteRide(Vehicle vehicle, int currentStep)
+	{
+		return (currentStep + getRouteDist(vehicle)) <= mustFinish;
+	}
+	
+	
 }

@@ -72,13 +72,28 @@ public class Simulation {
 			}
 			
 			for (i = 0; i < availableRides.size(); ++i) {
+				int smallestDist = Integer.MAX_VALUE;
+				int smallestDistIndex = -1;
+				
 				for (j = 0; j < vehicles.length; ++j) {
-					if (vehicles[j].occupied) continue;
+					Vehicle vehicle = vehicles[j];
+					if (vehicle.occupied) continue;
 					
-					if (availableRides.get(i).canCompleteRide(vehicles[j], currentStep)) {
-						vehicles[j].doRide(availableRides.get(i));
+					int rideDist = availableRides.get(i).getRouteDist(vehicle);
+					
+					if (rideDist < smallestDist) {
+						smallestDist = rideDist;
+						smallestDistIndex = j;
+					}
+				}
+				
+				if (smallestDistIndex != -1) {
+					Vehicle bestVehicle = vehicles[smallestDistIndex];
+					
+					if (availableRides.get(i).canCompleteRide(bestVehicle, currentStep)) {
+						bestVehicle.doRide(availableRides.get(i));
 						
-						assignedRides.get(j).add(availableRides.get(i).index);
+						assignedRides.get(smallestDistIndex).add(availableRides.get(i).index);
 						
 						availableRides.remove(i);
 						--i;
